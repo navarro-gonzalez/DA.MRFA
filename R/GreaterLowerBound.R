@@ -1,5 +1,9 @@
 GreaterLowerBound<-function(C,conv,T,pwarnings){
 
+  list.of.packages <- c("stats","Matrix","optimbase","psych")
+  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+  if(length(new.packages)) install.packages(new.packages)
+
   library("stats")
   library("Matrix")
   library("optimbase")

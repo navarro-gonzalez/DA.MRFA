@@ -1,12 +1,16 @@
 parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
 
-  #begin timer
-  ptm <- proc.time()
+  list.of.packages <- c("stats","Matrix","optimbase","psych")
+  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+  if(length(new.packages)) install.packages(new.packages)
 
   library("stats")
   library("Matrix")
   library("optimbase")
   library("psych")
+
+  #begin timer
+  ptm <- proc.time()
 
   ######################################################################
   #  X : Raw sample scores
@@ -146,7 +150,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
 
   time.taken.mrfa<-time.taken.mrfa[3]
 
-  et.seconds<-(time.taken.mrfa*Ndatsets)*0.85
+  et.seconds<-(time.taken.mrfa*Ndatsets)*0.8
 
   et.hours<-floor(et.seconds/3600)
   et.minutes<-floor(et.seconds/60)

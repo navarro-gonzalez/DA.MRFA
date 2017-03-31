@@ -1,10 +1,14 @@
 testme<-function(){
 
+  list.of.packages <- c("PCovR","stats","Matrix","optimbase","psych")
+  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+  if(length(new.packages)) install.packages(new.packages)
+
+  library("PCovR")
   library("stats")
   library("Matrix")
   library("optimbase")
   library("psych")
-  require("PCovR")
 
   cat('\nThis is an example function designed for ilustrate the functions included in DA.MRFA package\n')
   cat('For more info about the package and the available functions type ?"DA.MRFA-package" \n\n')

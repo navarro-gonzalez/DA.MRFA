@@ -1,5 +1,9 @@
 mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
 
+  list.of.packages <- c("stats","Matrix","optimbase","psych")
+  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+  if(length(new.packages)) install.packages(new.packages)
+
   library("stats")
   library("Matrix")
   library("optimbase")
@@ -135,8 +139,33 @@ mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
       cat(sprintf("X%3.0f  %5.4f \n",i,gam[i]))
     }
     cat('\n\n')
-    cat('Factor Loading Matrix:\n\n')
-    prmatrix(A)
+
+    if (dimensionality==1){
+      f2<-size(A)[1]
+      f1<-size(A)[2]
+    }
+    else {
+      f1<-size(A)[1]
+      f2<-size(A)[2]
+    }
+    cat('       ')
+    for (k in 1:f2){
+      cat(sprintf('   Factor %2.0f',k))
+    }
+    cat('\n')
+    for (i in 1:f1){
+      cat(sprintf("V% 3.0f",i))
+      if (f2==1){
+        cat(sprintf('     % 5.4f',A[i]))
+      }
+      else{
+        for (j in 1:f2){
+          cat(sprintf('     % 5.4f',A[i,j]))
+        }
+      }
+      cat("\n")
+    }
+    cat('\n')
     invisible(OUT)
 
   }
