@@ -132,7 +132,7 @@ mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
     cat('Optimal Communalities:\n\n')
     buff1=''
     for (i in 1:m){
-      cat(sprintf("X%2.0f  %5.4f \n",i,gam[i]))
+      cat(sprintf("X%3.0f  %5.4f \n",i,gam[i]))
     }
     cat('\n\n')
     cat('Factor Loading Matrix:\n\n')

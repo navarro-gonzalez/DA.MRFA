@@ -4,10 +4,10 @@ testme<-function(){
   library("Matrix")
   library("optimbase")
   library("psych")
-  library("PCovR")
+  require("PCovR")
 
-  cat('This is an example function designed for ilustrate the functions included in DA.MRFA package\n')
-  cat('For more info about the package and the available functions type ?DA.MRFA-package \n\n')
+  cat('\nThis is an example function designed for ilustrate the functions included in DA.MRFA package\n')
+  cat('For more info about the package and the available functions type ?"DA.MRFA-package" \n\n')
 
   data(IDAQ)
 
@@ -34,7 +34,6 @@ testme<-function(){
 
   cat('Dataset used: IDAQ (100 obs, 23 variables)\n\n')
 
-  cat('\n')
   cat('Parallel Analysis (PA) based on Minimum Rank Factor Analysis\n\n')
 
   cat('Adequacy of the Dispersion Matrix:\n\n')
@@ -87,16 +86,20 @@ testme<-function(){
   }
   cat('\n')
   if (nf_mean>nf_per){
-    cat(sprintf('**  Advised number of factors:   %.0f\n',out_PA$nf_per))
-    cat(sprintf('*   Advised number of factors:   %.0f\n\n',out_PA$nf_mean))
+    cat(sprintf('**  Advised number of factors:   %.0f\n',nf_per))
+    cat(sprintf('*   Advised number of factors:   %.0f\n\n',nf_mean))
   }
   else {
-    cat(sprintf('**  Advised number of factors:   %.0f\n\n',out_PA$nf_per))
+    cat(sprintf('**  Advised number of factors:   %.0f\n\n',nf_per))
   }
 
   #FACTOR ANALYSIS
   cat('Rotated Loading Matrix using Promin (Lorenzo-Seva, 1999)\n\n')
-  prmatrix(P)
+  cat('       Factor 1   Factor 2   Factor 3\n')
+  f1<-size(P)[1]
+  for (i in 1:f1){
+    cat(sprintf("V% 3.0f  % 5.4f    % 5.4f    % 5.4f\n",i,P[i,1],P[i,2],P[i,3]))
+  }
   cat('\n')
 
   #PLOT
@@ -150,5 +153,8 @@ testme<-function(){
   buff[3]="Percentile of random"
 
   legend(xrange[1]-6,yrange[2],buff,cex=0.8, col=colors,pch=plotchar,lty=linetype)
+
+  cat('This is an example function designed for ilustrate the functions included in DA.MRFA package\n')
+  cat('For more info about the package and the available functions type ?"DA.MRFA-package" \n\n')
 
 }

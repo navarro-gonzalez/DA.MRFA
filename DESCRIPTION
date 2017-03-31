@@ -2,6 +2,7 @@ Package: DA.MRFA
 Type: Package
 Title: Dimensionality Assesment using Minimum Rank Factor Analysis (MRFA)
 Version: 0.2.0
+Date: 1/04/2017
 Author: David Navarro-Gonzalez, Urbano Lorenzo-Seva
 Maintainer: David Navarro-Gonzalez <david.navarro@urv.cat>
 Description: DA.MRFA is designed for perform Parallel Analysis (PA) using Minimum Rank Factor Analysis (MRFA). The computation is based on the procedure proposed by Timmerman and Lorenzo-Seva (2011) which is designed for assessing the dimensionality of a variable set.
@@ -10,5 +11,6 @@ Depends: stats, Matrix, optimbase, psych
 Suggests: PCovR
 License: GPL-3
 Encoding: UTF-8
+NeedsCompilation: no
 LazyData: true
 RoxygenNote: 6.0.1

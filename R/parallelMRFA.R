@@ -45,8 +45,15 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
   }
   else{
     if (corr!="Pearson" && corr!="Polychoric"){
-      if (corr!="pearson" && corr!="")
-      stop("corr argument has to be 'Pearson' for computing Pearson correlation or 'Polychoric' for computing Polychoric/Tetrachoric correlation)")
+        if (corr=="pearson"){
+          corr<-1
+        }
+        else if (corr=="polychoric"){
+          corr<-2
+        }
+      else {
+        stop("corr argument has to be 'Pearson' for computing Pearson correlation or 'Polychoric' for computing Polychoric/Tetrachoric correlation)")
+      }
     }
     else {
       if (corr=="Pearson"){
@@ -134,6 +141,49 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
   }
 
   out<-mrfa(SIGMA=R,dimensionality=(m-1),random=10,display = 0)
+
+  time.taken.mrfa <- proc.time() - ptm
+
+  time.taken.mrfa<-time.taken.mrfa[3]
+
+  et.seconds<-(time.taken.mrfa*Ndatsets)*0.85
+
+  et.hours<-floor(et.seconds/3600)
+  et.minutes<-floor(et.seconds/60)
+  et.seconds<-floor(et.seconds-(et.minutes*60))
+  if (et.minutes<=1.5){
+    cat('Estimated time for the analysis: less than a minute')
+  }
+  else if (et.minutes>1.5 && et.minutes<=3.5){
+    cat('Estimated time for the analysis: between 1 and 3 minutes')
+  }
+  else if (et.minutes>3.5 && et.minutes <=5.5){
+    cat('Estimated time for the analysis: between 3 and 5 minutes')
+  }
+  else if (et.minutes>5.5 && et.minutes <=10.5){
+    cat('Estimated time for the analysis: between 5 and 10 minutes')
+  }
+  else if (et.minutes>10.5 && et.minutes <=15.5){
+    cat('Estimated time for the analysis: between 10 and 15 minutes')
+  }
+  else if (et.minutes>15.5 && et.minutes <=20.5){
+    cat('Estimated time for the analysis: between 15 and 20 minutes')
+  }
+  else if (et.minutes>20.5 && et.minutes <=30.5){
+    cat('Estimated time for the analysis: between 20 and 30 minutes')
+  }
+  else if (et.minutes>30.5 && et.minutes <=59.5){
+    cat('Estimated time for the analysis: between 30 and 1 hour')
+  }
+  else {
+    cat('Estimated time for the analysis: more than an hour')
+  }
+
+  cat('\n\n')
+
+  et.total_time<-sprintf('%02.0f:%02.0f:%02.0f',et.hours,et.minutes,et.seconds)
+
+  #cat(sprintf('Estimated time for the analysis: %s \n\n',et.total_time))
 
   SIGMARED<-out$Matrix
 
@@ -342,7 +392,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
       cat('WARNING: The matrix was not positive-defined, a smoothing procedure has been applied (Devlin, Gnanadesikan & Kettenring, 1981)\n\n')
     }
     if (check_adeq==1){
-      cat('WARNING: The matrix is not suitable for performing factor analysis (KMO <0.7\n\n')
+      cat('WARNING: The matrix is not suitable for performing factor analysis (KMO <0.7)\n\n')
     }
 
     cat(sprintf('Computing time: %s \n\n',total_time))
