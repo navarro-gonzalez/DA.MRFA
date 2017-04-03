@@ -1,1 +1,2 @@
 exportPattern("^[[:alpha:]]+")
+import("stats","Matrix","optimbase","psych")

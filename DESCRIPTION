@@ -7,7 +7,7 @@ Author: David Navarro-Gonzalez, Urbano Lorenzo-Seva
 Maintainer: David Navarro-Gonzalez <david.navarro@urv.cat>
 Description: DA.MRFA is designed for perform Parallel Analysis (PA) using Minimum Rank Factor Analysis (MRFA). The computation is based on the procedure proposed by Timmerman and Lorenzo-Seva (2011) which is designed for assessing the dimensionality of a variable set.
     The package also includes the option to compute MRFA by itself, as well as the Greater Lower Bound (glb) calculation.
-Depends: stats, Matrix, optimbase, psych
+Imports: stats, Matrix, optimbase, psych
 Suggests: PCovR
 License: GPL-3
 Encoding: UTF-8
