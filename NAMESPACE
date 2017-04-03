@@ -1,2 +1,3 @@
 exportPattern("^[[:alpha:]]+")
-import("stats","Matrix","optimbase","psych")
+importFrom("optimbase","transpose")
+importFrom("optimbase","size")

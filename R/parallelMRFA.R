@@ -1,13 +1,8 @@
 parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
 
-  list.of.packages <- c("stats","Matrix","optimbase","psych")
-  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-  if(length(new.packages)) install.packages(new.packages)
-
-  library("stats")
-  library("Matrix")
-  library("optimbase")
-  library("psych")
+  #list.of.packages <- c("stats","Matrix","optimbase","psych")
+  #new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+  #if(length(new.packages)) install.packages(new.packages)
 
   #begin timer
   ptm <- proc.time()
@@ -125,7 +120,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
   }
   else if (corr==2){
     #Polychoric matrix
-    R<-(polychoric(X))$rho
+    R<-(psych::polychoric(X))$rho
   }
 
   #check adequacy of the matrix (determinant, Bartlett & KMO)
@@ -216,7 +211,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
 
   for (a in 1:Ndatsets){
 
-    Xi=zeros(N,m)
+    Xi=optimbase::zeros(N,m)
 
     buff<-matrix(runif((N*m), min=0, max=1),N)
     buff2<-matrix(apply(buff,2,sort),N)
@@ -239,7 +234,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
     }
     else if (corr==2){
       #polychoric matrix
-      Ri<-(polychoric(Xi,correct = 0))$rho
+      Ri<-(psych::polychoric(Xi,correct = 0))$rho
     }
 
     D<-eigen(Ri)$values
@@ -458,7 +453,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
     buff[2]="Mean of random"
     buff[3]="Percentile of random"
 
-    legend(xrange[1]-6,yrange[2],buff,cex=0.8, col=colors,pch=plotchar,lty=linetype)
+    legend(xrange[1]-round(xrange[1]*0.4),yrange[2],buff,cex=0.8, col=colors,pch=plotchar,lty=linetype)
   }
 
 }

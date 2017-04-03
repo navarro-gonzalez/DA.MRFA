@@ -1,14 +1,5 @@
 mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
 
-  list.of.packages <- c("stats","Matrix","optimbase","psych")
-  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-  if(length(new.packages)) install.packages(new.packages)
-
-  library("stats")
-  library("Matrix")
-  library("optimbase")
-  library("psych")
-
   m1<-size(SIGMA)[1]
   m<-size(SIGMA)[2]
 
