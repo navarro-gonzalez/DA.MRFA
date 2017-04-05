@@ -145,7 +145,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
 
   time.taken.mrfa<-time.taken.mrfa[3]
 
-  et.seconds<-(time.taken.mrfa*Ndatsets)*0.8
+  et.seconds<-(time.taken.mrfa*Ndatsets)*0.75
 
   et.hours<-floor(et.seconds/3600)
   et.minutes<-floor(et.seconds/60)
@@ -317,7 +317,62 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
 
   OUT<-list('Real_Data'=realevals_p,'Real_Data_eigenv'=realevals, 'Mean_random'=means_p,'Percentile_random'=percentiles_p,'N_factors_mean'=nf_mean,'N_factors_percentiles'=nf_per)
 
+  if (graph==1){
 
+    buff_realevals<-realevals_p
+    buff_means<-means_p
+    buff_percentiles<-percentiles_p
+
+    min_val=min(buff_realevals,buff_means,buff_percentiles)
+    max_val=max(buff_realevals,buff_means,buff_percentiles)
+
+    yrange=as.numeric(cbind(min_val,max_val))
+
+    xrange=matrix(0,1,2)
+    xrange[1]=size(buff_realevals)[2]
+    xrange[2]=size(buff_realevals)[1]
+
+    plot(xrange,yrange,type='n',xlab='Factors',ylab="% Explained Common Variance",xaxt='n',yaxt='n')
+
+    if(max_val<10){
+      axis_y<-1
+    }
+    else{
+      axis_y<-round(max_val/10)
+    }
+    axis_y2<-seq(0,round(max_val+1),by=axis_y)
+    axis(2,axis_y2)
+
+    colors<-rainbow(3)
+
+    if(xrange[1]<10){
+      axis_x<-1
+    }
+    else{
+      axis_x<-round((xrange[1]+1)/10)
+    }
+    axis_x2<-seq(0,round(xrange[1]+1),by=axis_x)
+    axis(1,axis_x2)
+    axis(1,nf_mean,col="#000000")
+    grid(nx=NA,ny=NULL)
+    abline(v=nf_mean,col="#000000",lty=3)
+
+    linetype<-c(1:3)
+    plotchar<-seq(18,18+3,1)
+
+    data_to_plot=cbind(buff_realevals,buff_means,buff_percentiles)
+
+    for (i in 1:3){
+      lines(data_to_plot[,i],type='b',lwd=1.5,lty=linetype[i],col=colors[i],pch=plotchar[i])
+    }
+    title("Parallel Analysis")
+    buff=character(length=3)
+    buff[1]="Real-Data"
+    buff[2]="Mean of random"
+    buff[3]="Percentile of random"
+
+    legend(xrange[1]-round(xrange[1]*0.4),yrange[2],buff,cex=0.8, col=colors,pch=plotchar,lty=linetype)
+  }
   if (display==0){
     cat(sprintf('\nComputing time: %s\n\n',total_time))
     return(OUT)
@@ -399,61 +454,6 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
     invisible(OUT)
   }
 
-  if (graph==1){
 
-    buff_realevals<-realevals_p
-    buff_means<-means_p
-    buff_percentiles<-percentiles_p
-
-    min_val=min(buff_realevals,buff_means,buff_percentiles)
-    max_val=max(buff_realevals,buff_means,buff_percentiles)
-
-    yrange=as.numeric(cbind(min_val,max_val))
-
-    xrange=matrix(0,1,2)
-    xrange[1]=size(buff_realevals)[2]
-    xrange[2]=size(buff_realevals)[1]
-
-    plot(xrange,yrange,type='n',xlab='Factors',ylab="% Explained Common Variance",xaxt='n',yaxt='n')
-
-    if(max_val<10){
-      axis_y<-1
-    }
-    else{
-      axis_y<-round(max_val/10)
-    }
-    axis_y2<-seq(0,round(max_val+1),by=axis_y)
-    axis(2,axis_y2)
-
-    colors<-rainbow(3)
-
-    if(xrange[1]<10){
-      axis_x<-1
-    }
-    else{
-      axis_x<-round((xrange[1]+1)/10)
-    }
-    axis_x2<-seq(0,round(xrange[1]+1),by=axis_x)
-    axis(1,axis_x2)
-    axis(1,nf_mean,col="#000000")
-    grid(nx=NA,ny=NULL)
-    abline(v=nf_mean,col="#000000",lty=3)
-
-    linetype<-c(1:3)
-    plotchar<-seq(18,18+3,1)
-
-    data_to_plot=cbind(buff_realevals,buff_means,buff_percentiles)
-
-    for (i in 1:3){
-      lines(data_to_plot[,i],type='b',lwd=1.5,lty=linetype[i],col=colors[i],pch=plotchar[i])
-    }
-    title("Parallel Analysis")
-    buff=character(length=3)
-    buff[1]="Real-Data"
-    buff[2]="Mean of random"
-    buff[3]="Percentile of random"
-
-    legend(xrange[1]-round(xrange[1]*0.4),yrange[2],buff,cex=0.8, col=colors,pch=plotchar,lty=linetype)
-  }
 
 }
