@@ -3,8 +3,6 @@ testme<-function(){
   cat('\nThis is an example function designed for ilustrate the functions included in DA.MRFA package\n')
   cat('For more info about the package and the available functions type ?"DA.MRFA-package" \n\n')
 
-  data(IDAQ)
-
   siz<-size(IDAQ)
   N<-siz[1]
   m<-siz[2]
@@ -22,11 +20,15 @@ testme<-function(){
 
   A<-out_MRFA$A
 
-  P<-PCovR::promin(A)$loadings
+  resul<-PCovR::promin(A)
+  P<-resul$loadings
+  U<-resul$U
+
+  PHI<-t(U)%*%U
 
   #Printing
 
-  cat('Dataset used: IDAQ (100 obs, 23 variables)\n\n')
+  cat('Dataset used: IDAQ (100 obs., 23 variables)\n\n')
 
   cat('Parallel Analysis (PA) based on Minimum Rank Factor Analysis\n\n')
 
@@ -96,6 +98,15 @@ testme<-function(){
   }
   cat('\n')
 
+  #Correlation matrix
+  cat('Correlation between factors\n\n')
+  cat('          Factor 1  Factor 2  Factor 3\n')
+  f1<-size(PHI)[1]
+  for (i in 1:f1){
+    cat(sprintf('Factor %1.0f % 5.4f   % 5.4f   % 5.4f \n',i,PHI[1,i],PHI[2,i],PHI[3,i]))
+  }
+  cat('\n')
+
   #PLOT
 
   min_val=min(buff_realevals,buff_means,buff_percentiles)
@@ -146,9 +157,11 @@ testme<-function(){
   buff[2]="Mean of random"
   buff[3]="Percentile of random"
 
-  legend(xrange[1]-6,yrange[2],buff,cex=0.8, col=colors,pch=plotchar,lty=linetype)
+  legend(xrange[1]-round(xrange[1]*0.4),yrange[2],buff,cex=0.8, col=colors,pch=plotchar,lty=linetype)
 
   cat('This is an example function designed for ilustrate the functions included in DA.MRFA package\n')
   cat('For more info about the package and the available functions type ?"DA.MRFA-package" \n\n')
+
+  out<-c("testme output has been printed in to the console, it is not designed for returning any value")
 
 }

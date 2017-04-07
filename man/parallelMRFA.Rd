@@ -8,7 +8,8 @@ Parallel Analysis using Minimum Rank Factor Analysis (MRFA)
 Performs Parallel Analysis using Minimum Rank Factor Analysis (MRFA).
 }
 \usage{
-parallelMRFA(X, Ndatsets=500,percent=95,corr=1,display=TRUE,graph=TRUE)
+parallelMRFA(X, Ndatsets = 500, percent = 95, corr= "Pearson", display = TRUE,
+    graph = TRUE)
 }
 \arguments{
   \item{X}{
@@ -58,22 +59,9 @@ David Navarro-Gonzalez
 
 Urbano Lorenzo-Seva
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-## perform a Parallel Analysis using an example Database with 600 random data sets and using the 99th percentile of distribution of the random data
-data(IDAQ)
-parallelMRFA(IDAQ, Ndatsets=600, percent=99)
-
-## perform a Parallel Analysis using an example Database with 100 random data sets, using polychoric correlations, using the 90th percentile of distribution of the random data
-data(IDAQ)
-parallelMRFA(IDAQ, Ndatsets=100, percent=90, type="Polychoric")
+## perform a Parallel Analysis using an example Database with 300 random data sets and using
+## the 99th percentile of distribution of the random data
+parallelMRFA(IDAQ, Ndatsets=300, percent=99)
 
 }

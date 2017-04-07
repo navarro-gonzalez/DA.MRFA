@@ -1,8 +1,4 @@
-parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
-
-  #list.of.packages <- c("stats","Matrix","optimbase","psych")
-  #new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-  #if(length(new.packages)) install.packages(new.packages)
+parallelMRFA<-function(X, Ndatsets = 500, percent = 95, corr = "Pearson", display = TRUE, graph = TRUE){
 
   #begin timer
   ptm <- proc.time()
@@ -10,6 +6,7 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
   ######################################################################
   #  X : Raw sample scores
   ######################################################################
+
   if (missing(X)){
     stop("The argument X is not optional, please provide a valid raw sample scores")
   }
@@ -17,99 +14,69 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
   ######################################################################
   #  Ndatsets: Number of random datasets used to compute the random distribution of eigenvalues
   ######################################################################
-  if (missing(Ndatsets)){
-    Ndatsets<-500
-  }
-  else if(Ndatsets<0){
+
+  if(Ndatsets<0){
     stop("Ndatsets argument has to be a positive value")
   }
 
   ######################################################################
   #  percent: Desired percentile of distribution of random eigenvalues (for example 95 for the 95th percentile) to be used as threshold
   ######################################################################
-  if (missing(percent)){
-    percent<-95
-  }
-  else{
-    if (percent>99.99 || percent<=0){
-      stop("percent argument has to be between 1 and 99")
-    }
+
+  if (percent>99.99 || percent<=0){
+    stop("percent argument has to be between 1 and 99")
   }
 
   ######################################################################
   #  corr: Determine if Pearson or Polychoric matrix will be used (1: Computes Pearson correlation matrices 2: Computes Polychoric correlation matrices)
   ######################################################################
-  if (missing(corr)){
-    corr<-1 #Pearson by default
-  }
-  else{
-    if (corr!="Pearson" && corr!="Polychoric"){
-        if (corr=="pearson"){
-          corr<-1
-        }
-        else if (corr=="polychoric"){
-          corr<-2
-        }
-      else {
-        stop("corr argument has to be 'Pearson' for computing Pearson correlation or 'Polychoric' for computing Polychoric/Tetrachoric correlation)")
+
+  if (corr!="Pearson" && corr!="Polychoric"){
+      if (corr=="pearson"){
+        corr = 1
       }
-    }
+      else if (corr=="polychoric"){
+        corr = 2
+      }
     else {
-      if (corr=="Pearson"){
-        corr<-1
-      }
-      else if (corr=="Polychoric"){
-        corr<-2
-      }
+      stop("corr argument has to be 'Pearson' for computing Pearson correlation or 'Polychoric' for computing Polychoric/Tetrachoric correlation)")
+    }
+  }
+  else {
+    if (corr=="Pearson"){
+      corr = 1
+    }
+    else if (corr=="Polychoric"){
+      corr = 2
     }
   }
 
+
   ######################################################################
   #  display argument: determines if the output will be displayed in the console
-  ######################################################################
-  if (missing(display)){
-    display=1
-  }
-  else{
-    if (display!=0 && display!=1){
-      stop("display argument has to be logical (TRUE or FALSE, 0 or 1)")
-    }
+
+  if (display!=0 && display!=1){
+    stop("display argument has to be logical (TRUE or FALSE, 0 or 1)")
   }
 
   ######################################################################
   #  graph argument: determines if the Scree Test plot will be printed
   ######################################################################
-  if (missing(graph)){
-    graph=1
+
+  if (graph!=0 && graph!=1){
+      stop("graph argument has to be logical (TRUE or FALSE, 0 or 1)")
   }
-  else{
-    if (graph!=0 && graph!=1){
-        stop("graph argument has to be logical (TRUE or FALSE, 0 or 1)")
-    }
-  }
+
 
   if (corr==1){
-    corr_char='Pearson correlation matrices'
+    corr_char = 'Pearson correlation matrices'
   }
   else if (corr==2){
-    corr_char='Polychoric correlation matrices'
-  }
-
-  if (display==0){
-    display_char='OFF'
-  }
-  else if (display==1){
-    display_char='ON'
+    corr_char = 'Polychoric correlation matrices'
   }
 
   ################################# Everything  OK #################################
   ################################# Begin Analysis #################################
-
-  #cat('\n')
-  #cat(sprintf('Number of random data sets: %.f \n',Ndatsets))
-  #cat(sprintf('Percentile of distribution of random eigenvalues: %.f \n',percent))
-  #cat(sprintf('Correlation Matrices to be computed: %s \n',corr_char))
-  cat(sprintf('Display output: %s \n\n',display_char))
 
   siz<-size(X)
   N<-siz[1]
@@ -141,49 +108,6 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
 
   out<-mrfa(SIGMA=R,dimensionality=(m-1),random=10,display = 0)
 
-  time.taken.mrfa <- proc.time() - ptm
-
-  time.taken.mrfa<-time.taken.mrfa[3]
-
-  et.seconds<-(time.taken.mrfa*Ndatsets)*0.75
-
-  et.hours<-floor(et.seconds/3600)
-  et.minutes<-floor(et.seconds/60)
-  et.seconds<-floor(et.seconds-(et.minutes*60))
-  if (et.minutes<=1.5){
-    cat('Estimated time for the analysis: less than a minute')
-  }
-  else if (et.minutes>1.5 && et.minutes<=3.5){
-    cat('Estimated time for the analysis: between 1 and 3 minutes')
-  }
-  else if (et.minutes>3.5 && et.minutes <=5.5){
-    cat('Estimated time for the analysis: between 3 and 5 minutes')
-  }
-  else if (et.minutes>5.5 && et.minutes <=10.5){
-    cat('Estimated time for the analysis: between 5 and 10 minutes')
-  }
-  else if (et.minutes>10.5 && et.minutes <=15.5){
-    cat('Estimated time for the analysis: between 10 and 15 minutes')
-  }
-  else if (et.minutes>15.5 && et.minutes <=20.5){
-    cat('Estimated time for the analysis: between 15 and 20 minutes')
-  }
-  else if (et.minutes>20.5 && et.minutes <=30.5){
-    cat('Estimated time for the analysis: between 20 and 30 minutes')
-  }
-  else if (et.minutes>30.5 && et.minutes <=59.5){
-    cat('Estimated time for the analysis: between 30 and 1 hour')
-  }
-  else {
-    cat('Estimated time for the analysis: more than an hour')
-  }
-
-  cat('\n\n')
-
-  et.total_time<-sprintf('%02.0f:%02.0f:%02.0f',et.hours,et.minutes,et.seconds)
-
-  #cat(sprintf('Estimated time for the analysis: %s \n\n',et.total_time))
-
   SIGMARED<-out$Matrix
 
   #function ed
@@ -205,11 +129,18 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
   evals<-array(0,dim=c(0,0))
   evals_p<-a<-array(0,dim=c(0,0))
 
-  #waitbar
-  cat('Computing Parallel Analysis: Please wait \n')
-  pb <- txtProgressBar(min = 0, max = Ndatsets, style = 3)
-
   for (a in 1:Ndatsets){
+
+    if (a==1){
+      #calculate the time elapsed for computing the first one for estimating the total elapsed time
+      ptm_one <- proc.time()
+    }
+
+    if (a==2){
+      #waitbar
+      cat('Computing Parallel Analysis: Please wait \n')
+      pb <- txtProgressBar(min = 0, max = Ndatsets-1, style = 3)
+    }
 
     Xi=optimbase::zeros(N,m)
 
@@ -260,9 +191,38 @@ parallelMRFA<-function(X,Ndatsets,percent,corr,display,graph){
     evals<-c(evals,L)
     evals_p<-c(evals_p,Lp)
 
-    Sys.sleep(0.1)
-    # update progress bar
-    setTxtProgressBar(pb, a)
+    if (a==1){
+      time.taken.mrfa <- proc.time() - ptm_one
+
+      time.taken.mrfa<-time.taken.mrfa[3]
+
+      et.seconds<-time.taken.mrfa*Ndatsets
+
+
+      if (corr==1){
+        et.minutes<-(et.seconds/60)*1.8
+      }
+      else {
+        et.minutes<-et.seconds/60
+      }
+
+      if (et.minutes<=1){
+        cat('Estimated time for the analysis: less than a minute')
+      }
+      if (et.minutes>1 && et.minutes<=1.5) {
+        cat(sprintf('Estimated time for the analysis: %3.0f minute',round(et.minutes)))
+      }
+      else {
+        cat(sprintf('Estimated time for the analysis: %3.0f minutes',round(et.minutes)))
+      }
+
+      cat('\n\n')
+    }
+    else{
+      Sys.sleep(0.1)
+      # update progress bar
+      setTxtProgressBar(pb, a-1)
+    }
 
   }
   close(pb)

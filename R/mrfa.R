@@ -1,4 +1,4 @@
-mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
+mrfa<-function(SIGMA, dimensionality = 1, random = 10, conv1, conv2, display = TRUE, pwarnings = FALSE){
 
   m1<-size(SIGMA)[1]
   m<-size(SIGMA)[2]
@@ -17,20 +17,16 @@ mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
   #  dimensionality argument: common factors used to find communality estimates
   ######################################################################
 
-  if (missing(dimensionality)){
-    dimensionality<-1
-  }
-  else if ((dimensionality>=m)||(dimensionality<0)){
-      stop("dimensionality argument has to be between 0 and the number of variables - 1")
+
+  if ((dimensionality>=m)||(dimensionality<0)){
+    stop("dimensionality argument has to be between 0 and the number of variables - 1")
   }
 
   ######################################################################
   #  random argument: number of random starts
   ######################################################################
-  if (missing(random)){
-    random=10
-  }
-  else if(random<=0){
+
+  if(random<=0){
     stop("random argument has to be a positive value")
   }
 
@@ -39,10 +35,10 @@ mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
   ######################################################################
   if (missing(conv1)){
     if(dimensionality==0){
-      conv1<-0.0000001
+      conv1 = 0.0000001
     }
     else{
-      conv1=0.0001
+      conv1 = 0.0001
     }
   }
   #The userhas provided the value, check if it is an OK value
@@ -58,10 +54,10 @@ mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
   ######################################################################
   if (missing(conv2)){
     if (dimensionality==0){
-      conv2<-0.000001
+      conv2 = 0.000001
     }
     else{
-      conv2=0.001
+      conv2 = 0.001
     }
   }
   #The user has provided the value, check if it is an OK value
@@ -75,25 +71,18 @@ mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
   ######################################################################
   #  display argument: determines if the output will be displayed in the console
   ######################################################################
-  if (missing(display)){
-    display=TRUE
-  }
-  else{
-    if (display!=0 && display!=1){
-      stop("display argument has to be logical (TRUE or FALSE, 0 or 1)")
-    }
+
+
+  if (display!=0 && display!=1){
+    stop("display argument has to be logical (TRUE or FALSE, 0 or 1)")
   }
 
   ######################################################################
   #  pwarnings argument: determines if the warnings will be printed in the console
   ######################################################################
-  if (missing(pwarnings)){
-    pwarnings=FALSE
-  }
-  else{
-    if (pwarnings!=0 && pwarnings!=1){
-      stop("pwarnings argument has to be logical (TRUE or FALSE, 0 or 1)")
-    }
+
+  if (pwarnings!=0 && pwarnings!=1){
+    stop("pwarnings argument has to be logical (TRUE or FALSE, 0 or 1)")
   }
 
   ################################# Everything  OK #################################
@@ -113,7 +102,8 @@ mrfa<-function(SIGMA,dimensionality,random,conv1,conv2,display,pwarnings){
   r<-dimensionality
   VV<-out_eigen$vectors[,1:r]
   LL<-out_eigen$values[1:r]
-  A<-VV*sqrt(LL)
+  LL<-diag(LL,r)
+  A<-VV%*%sqrt(LL)
 
   OUT<-list('A'=A,'Matrix'=SIGMARED,'gam'=gam)
   if (display==0){

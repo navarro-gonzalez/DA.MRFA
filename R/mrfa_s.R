@@ -58,7 +58,7 @@ mrfa_s<-function(SIGMA,r,nstarts,conv1,conv2,pwarnings){
         resultat<-GreaterLowerBound(Sigma1,conv2,T)
 
         gam<-resultat$gam
-        T<-resultat$T
+        #T<-resultat$T
         gam<-gam/(w^2)
         SIGMARED=SIGMA-diag(diag(SIGMA))+diag(c(gam))
         #function ed

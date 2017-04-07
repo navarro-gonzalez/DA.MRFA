@@ -12,13 +12,6 @@ testme()
 \details{
 The function implements all the functions on the \code{DA.MRFA} package. For ilustrating purposes, the loading matrix obtained using MRFA (\code{\link{mrfa}} function) is rotated using the function \code{\link[PCovR]{promin}} (Lorenzo-Seva, 1999), from \code{PCovR} package (Vervloet, Kiers, Van den Noortgate & Ceulemans, 2015).
 }
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
 \references{
 Lorenzo-Seva, U. (1999). Promin: A Method for Oblique Factor Rotation. Multivariate Behavioral Research, 34(3), 347–365 \url{http://doi.org/10.1207/S15327906MBR3403_3}
 
@@ -29,17 +22,6 @@ David Navarro-Gonzalez
 
 Urbano Lorenzo-Seva
 }
-\note{
-}
-
-
-\seealso{
-}
 \examples{
-#The function is executed like this.
 testme()
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

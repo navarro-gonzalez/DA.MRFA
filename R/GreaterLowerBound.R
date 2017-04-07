@@ -1,4 +1,4 @@
-GreaterLowerBound<-function(C,conv,T,pwarnings){
+GreaterLowerBound<-function(C, conv = 0.000001, T, pwarnings = FALSE){
 
   m1<-size(C)[1]
   m<-size(C)[2]
@@ -15,9 +15,7 @@ GreaterLowerBound<-function(C,conv,T,pwarnings){
   ######################################################################
   #  conv argument: Convergence criterion for glb step
   ######################################################################
-  if (missing(conv)){
-    conv<-0.000001
-  }
+
   #The user has provided the value, check if it is an OK value
   else if(conv>0.1){
     stop("conv (convergence value for computing glb) has to be lower or equal than 0.1")
@@ -41,13 +39,10 @@ GreaterLowerBound<-function(C,conv,T,pwarnings){
   ######################################################################
   #  pwarnings argument: determines if the warnings will be printed in the console
   ######################################################################
-  if (missing(pwarnings)){
-    pwarnings=FALSE
-  }
-  else{
-    if (pwarnings!=0 && pwarnings!=1){
-      stop("pwarnings argument has to be logical (TRUE or FALSE, 0 or 1)")
-    }
+
+
+  if (pwarnings!=0 && pwarnings!=1){
+    stop("pwarnings argument has to be logical (TRUE or FALSE, 0 or 1)")
   }
 
   ################################# Everything  OK #################################
@@ -152,7 +147,7 @@ GreaterLowerBound<-function(C,conv,T,pwarnings){
   }
 
   gam<-as.numeric(gamma1)
-  my_list<-list("T"=T, "gam"=gam)
+  my_list<-list("gam"=gam)
   return(my_list)
 
 }

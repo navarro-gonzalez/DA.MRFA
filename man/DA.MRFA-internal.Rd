@@ -8,6 +8,7 @@
 DA.MRFA-internal
 }
 \description{
+This functions are for internal use only.
 }
 \usage{
 mrfa_s
@@ -15,25 +16,9 @@ nrm
 sr
 adequacymatrix
 }
-\arguments{
-}
-\details{
-This functions are for internal use only.
-}
-\value{
-}
-\references{
-}
 \author{
 David Navarro-Gonzalez
 
 Urbano Lorenzo-Seva
-}
-\note{
-}
-
-\seealso{
-}
-\examples{
 }
 \keyword{ internal }

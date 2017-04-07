@@ -1,6 +1,5 @@
 \name{mrfa}
 \alias{mrfa}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Minimum Rank Factor Analysis function
 }
@@ -8,9 +7,9 @@ Minimum Rank Factor Analysis function
 Performs Minimum Rank Factor Analysis (MRFA) procedure, proposed by Ten Berge & Kiers (1991).
 }
 \usage{
-mrfa(SIGMA, dimensionality=1, random=10, conv1, conv2, display=TRUE, pwarnings=FALSE)
+mrfa(SIGMA, dimensionality = 1, random = 10, conv1, conv2, display = TRUE,
+    pwarnings = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{SIGMA}{
 Covariance/correlation matrix to be used in the analysis.
@@ -34,9 +33,7 @@ Determines if the output will be displayed in the console, TRUE by default. If i
 Determines if the possible warnings occurred during the computation will be printed in the console.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   \item{A}{Factor loading matrix}
   \item{Matrix}{Covariance/Correlation matrix with optimal communalities in the diagonal}
@@ -50,18 +47,8 @@ David Navarro-Gonzalez
 
 Urbano Lorenzo-Seva
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-## perform MRFA using the correlation matrix of the IDAQ dataset, and using severe convergence criterion for
-MRFA and glb step.
-data(IDAQ)
+## perform MRFA using the correlation matrix of the IDAQ dataset, and using severe convergence
+## criterion for MRFA and glb step.
 mrfa(cor(IDAQ), dimensionality=3, conv1=0.000001, conv2=0.00001)
 }
