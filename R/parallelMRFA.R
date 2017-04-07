@@ -212,7 +212,7 @@ parallelMRFA<-function(X, Ndatsets = 500, percent = 95, corr = "Pearson", displa
       if (et.minutes>1 && et.minutes<=1.5) {
         cat(sprintf('Estimated time for the analysis: %3.0f minute',round(et.minutes)))
       }
-      else {
+      if (et.minutes>1.5) {
         cat(sprintf('Estimated time for the analysis: %3.0f minutes',round(et.minutes)))
       }
 

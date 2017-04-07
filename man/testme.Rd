@@ -7,7 +7,12 @@ Function for test the full capabilites of \code{DA.MRFA} package
 testme is a function which includes all the functions included in the DA.MRFA package, and his purpose is to serve as a demonstration of the potential usage of the package functions.
 }
 \usage{
-testme()
+testme(example = FALSE)
+}
+\arguments{
+  \item{example}{
+  Determine if the usage is for exampling purpose or not (FALSE by default).
+}
 }
 \details{
 The function implements all the functions on the \code{DA.MRFA} package. For ilustrating purposes, the loading matrix obtained using MRFA (\code{\link{mrfa}} function) is rotated using the function \code{\link[PCovR]{promin}} (Lorenzo-Seva, 1999), from \code{PCovR} package (Vervloet, Kiers, Van den Noortgate & Ceulemans, 2015).
@@ -23,5 +28,6 @@ David Navarro-Gonzalez
 Urbano Lorenzo-Seva
 }
 \examples{
-testme()
+## For a fast usage of testme use:
+testme(example=TRUE)
 }

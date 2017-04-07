@@ -30,7 +30,7 @@ David Navarro-Gonzalez
 Urbano Lorenzo-Seva
 }
 \examples{
-## Each man page contains examples of each function. For a global example use
-testme()
+## Each man page contains examples of each function. For a fast global example use
+testme(example = TRUE)
 }
 \keyword{ package }

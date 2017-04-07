@@ -1,7 +1,9 @@
-testme<-function(){
+testme<-function(example = FALSE){
 
   cat('\nThis is an example function designed for ilustrate the functions included in DA.MRFA package\n')
   cat('For more info about the package and the available functions type ?"DA.MRFA-package" \n\n')
+
+  IDAQ<-IDAQ
 
   siz<-size(IDAQ)
   N<-siz[1]
@@ -13,7 +15,12 @@ testme<-function(){
   adeq<-adequacymatrix(R,N)
 
   #Parallel Anallysis
-  out_PA<-parallelMRFA(X=IDAQ,display = 0,graph = 0)
+  if (example == FALSE){
+  out_PA<-parallelMRFA(X=IDAQ, display = 0, graph = 0)
+  }
+  else {
+    out_PA<-parallelMRFA(X=IDAQ,Ndatsets = 25, display = 0, graph = 0)
+  }
 
   #MRFA
   out_MRFA<-mrfa(SIGMA=R,dimensionality=3,random=10,display = 0)
