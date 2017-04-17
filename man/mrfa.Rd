@@ -48,7 +48,7 @@ David Navarro-Gonzalez
 Urbano Lorenzo-Seva
 }
 \examples{
-## perform MRFA using the correlation matrix of the IDAQ dataset, and using severe convergence
-## criterion for MRFA and glb step.
-mrfa(cor(IDAQ), dimensionality=3, conv1=0.000001, conv2=0.00001)
+## perform MRFA using the correlation matrix of the IDAQ dataset, and using the default
+## convergence criterion for MRFA and glb step.
+mrfa(cor(IDAQ), dimensionality=3)
 }

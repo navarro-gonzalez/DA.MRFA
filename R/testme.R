@@ -19,7 +19,7 @@ testme<-function(example = FALSE){
   out_PA<-parallelMRFA(X=IDAQ, display = 0, graph = 0)
   }
   else {
-    out_PA<-parallelMRFA(X=IDAQ,Ndatsets = 25, display = 0, graph = 0)
+    out_PA<-parallelMRFA(X=IDAQ,Ndatsets = 10, display = 0, graph = 0)
   }
 
   #MRFA
